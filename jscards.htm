@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+		<meta charset="utf-8">
+		<title>52 card JS simulator</title>
+		<script>
+function cardFunction()
+{
+//alert("Hello World!");
+var q=document.getElementById("quitV").value;
+var totalit=document.getElementById("numGoes").value;
+//alert(startTime);
+var yesNo=true;
+if (totalit>=100001)
+  {
+  yesNo=confirm("You have chosen a number of iterations of more than 100,000.\n\nIt should only take a second or so but your Browser might think it's crashed.\n\nContinue?");
+  }
+if (!(q<27 && q>0 && q==Math.floor(q)))
+{
+  alert("Your Quit value makes no sense!\n\nShould be an integer 1 to 26.");
+  yesNo=false;
+}
+if (totalit<1 || totalit!=Math.floor(totalit))
+{
+  alert("Your value for number of iterations makes no sense!\n\nShould be an integer greater than 1.\n\nPerhaps around 50,000.");
+  yesNo=false;  
+}
+
+if (yesNo==true)
+{
+var startTime = new Date();
+var totalwin=0;
+for (iter=0;iter<totalit;iter++) //main loop fro program
+{ 
+  //alert("Hello World!");
+  var deck = new Array();
+  //set deck to zero up to like 60 haven't decided if first
+  //card will be 0 or 1 yet   
+  for (a=0;a<55;a++)
+    {
+    deck[a]=0;
+    }
+    //randomise the deck by picking a random card and flipping if not already flipped
+  a=0;
+  while (a<26)
+    {
+    b=Math.floor(Math.random()*52)+1; //random number from 1 to 52, first card is 1
+    //alert(b+"\n\n"+deck[b]+"\n\n"+a);
+    if (deck[b]==0)
+      {
+      deck[b]=1;
+      a++;
+      }
+    }   
+  //deck built now test deck for wins 
+  w=0;
+  for (a=1;a<53;a++)
+    {
+    if (deck[a]==0) 
+      {
+      w++;
+      }
+    else
+      {
+      w--;
+      }
+    if (w==q) break;    
+    }
+    totalwin=totalwin+w;
+    //alert(a+"\n\n"+w+"\n\n"+totalwin);
+    /* */
+} //end of main loop
+var writeOut=document.getElementById("whereAnswer");
+var endTime = new Date();
+//alert(endTime);
+var durationTime = endTime - startTime;
+//durationTime = 10;
+//alert(durationTime);
+writeOut.innerHTML="After " + totalit + " goes the average win was " + totalwin/totalit +" in " + durationTime + " milliseconds";
+}
+}
+</script>
+</head>
+
+<body>
+http://puzzles.nigelcoldwell.co.uk/fourteen.htm<br />
+The tool below will run the simulation in your browser to help determine the value of x with the highest expected return.
+<br /><br />
+<input id="quitV" type="text">&nbsp;Enter a quit value.<br/>
+<input id="numGoes" type="text" value="50000">&nbsp;Number of times to run simulation.<br>
+<button type="button" onclick="cardFunction()">Go!</button>
+<p id="whereAnswer"></p>
+This shows us the best return is when <strong>x</strong> or our quit value is 4. However there may be more we can do:
+
+
+<br /><br /><br /><br />
+&copy;&nbsp;Nigel Coldwell&nbsp;
+<script>
+var d = new Date();
+document.write(d.getFullYear());
+
+
+
+
+
+</body>
+</html> 
